@@ -61,11 +61,10 @@
   "semi": true,
   "singleQuote": true
 }
-
+```
 ---
 
 # Установка **Redux**
-
 
 - `npm install redux react-redux --save`
 - `npm install --save-dev @redux-devtools/core`
