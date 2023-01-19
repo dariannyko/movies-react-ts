@@ -1,19 +1,32 @@
 import styles from './Pagination.module.scss';
+import films from '../../assets/films.json';
 
-const paginationList = ['Вперед', 'Назад'];
-type Props = {};
+const startPage = 1;
 
-const Pagination = (props: Props) => {
+type Props = {
+  filmsPerPage: number;
+  currentPage: number;
+  setCurrentPage: (value: number) => void;
+};
+
+const Pagination = ({ filmsPerPage, currentPage, setCurrentPage }: Props) => {
+  const pages = Math.ceil(films.length / filmsPerPage);
+  const paginate = (number: number) => {
+    if (number > pages) return;
+    if (number < startPage) return;
+    setCurrentPage(number);
+  };
+  
+
   return (
     <>
       <div className={styles.container}>
-        {paginationList.map((item, index) => (
-          <button className={styles.button} key={index}>
-            {item}
-          </button>
-        ))}
+        <button className={`${styles.button} ${currentPage <= startPage ? styles.disabled : ''}`} onClick={() => paginate(currentPage-1)}>Назад</button>
+        <button className={`${styles.button} ${currentPage >= pages ? styles.disabled : ''}`} onClick={() => paginate(currentPage+1)}>Вперед</button>
       </div>
-      <div className={styles.text}>1 из 1455</div>
+      <div className={styles.text}>
+        {currentPage} из {pages}
+      </div>
     </>
   );
 };

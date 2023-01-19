@@ -1,16 +1,33 @@
 import { FilmCard } from './FilmCard';
 import styles from './Films.module.scss';
-import films from '../../assets/films.json'
+import { Film } from '../../assets/shared/Types';
+import { Loader } from '../Loader/Loader';
 
-type Props = {};
+const loader = [...new Array(10)];
 
-const Films = (props: Props) => {
+type Props = {
+  currentFilms: Film[];
+  isLoading: boolean;
+};
+
+const Films = ({ currentFilms, isLoading }: Props) => {
   return (
     <section className={styles.container}>
-      {films.map(({id, title, vote_average, release_date}) => (
-        <FilmCard key={id} title={title} rating = {vote_average} year ={release_date} />
-      ))}
-      
+      <div className={styles.filmsWrapper}>
+      {isLoading
+        ? loader.map((item, index) => <Loader key={index} />)
+        : currentFilms.map(
+            ({ id, title, vote_average, release_date, poster_path }) => (
+              <FilmCard
+                key={id}
+                title={title}
+                rating={vote_average}
+                year={release_date}
+                poster={poster_path}
+              />
+            )
+          )}
+          </div>
     </section>
   );
 };

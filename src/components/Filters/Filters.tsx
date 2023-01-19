@@ -5,7 +5,11 @@ import { Sort } from '../Sort/Sort';
 import styles from './Filters.module.scss';
 
 
-type Props = {};
+type Props = {
+  filmsPerPage: number;
+  currentPage: number;
+  setCurrentPage: (value: number)=> void;
+};
 
 const sortList = [
   'Популярные по убыванию',
@@ -14,7 +18,7 @@ const sortList = [
 ];
 const yearList = ['2022', '2021', '2020'];
 
-const Filters = (props: Props) => {
+const Filters = ({filmsPerPage, currentPage, setCurrentPage}: Props) => {
   return (
     <aside className={styles.container}>
       <h1 className={styles.title}>Фильтры</h1>
@@ -28,7 +32,7 @@ const Filters = (props: Props) => {
       />
       <Sort title={'Год релиза'} sortName={'2022'} sortList={yearList} />
       <CheckboxFrom />
-      <Pagination/>
+      <Pagination filmsPerPage={filmsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
     </aside>
   );
 };

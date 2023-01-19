@@ -1,13 +1,14 @@
 import styles from './Films.module.scss';
-import cover from '../../assets/img/film-cover.png';
+const imageUrl = 'https://image.tmdb.org/t/p/w500';
 
 type Props = {
   title: string;
   rating: number;
   year: string;
+  poster: string;
 };
 
-const FilmCard = ({title, rating, year}: Props) => {
+const FilmCard = ({ title, rating, year, poster }: Props) => {
   return (
     <div className={styles.filmCard}>
       <div className={styles.filmContainer}>
@@ -46,10 +47,10 @@ const FilmCard = ({title, rating, year}: Props) => {
             </div>
           </div>
           <h2 className={styles.title}>{title}</h2>
-          <p className={styles.year}>{year.slice(0,4)}</p>
+          <p className={styles.year}>{year.slice(0, 4)}</p>
         </div>
       </div>
-      <img className={styles.filmCover} src={cover} alt="" />
+      <img className={styles.filmCover} src={`${imageUrl}${poster}`} alt="" />
     </div>
   );
 };
