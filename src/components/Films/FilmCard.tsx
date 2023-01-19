@@ -1,15 +1,19 @@
 import styles from './Films.module.scss';
-import filmCover from '../../img/film-cover.png';
+import cover from '../../assets/img/film-cover.png';
 
-type Props = {};
+type Props = {
+  title: string;
+  rating: number;
+  year: string;
+};
 
-const FilmCard = (props: Props) => {
+const FilmCard = ({title, rating, year}: Props) => {
   return (
     <div className={styles.filmCard}>
       <div className={styles.filmContainer}>
         <div className={styles.wrapper}>
           <div className={styles.rating}>
-            <div className={styles.mark}> 8.4</div>
+            <div className={styles.mark}>{rating}</div>
             <div className={styles.images}>
               <svg
                 className={styles.star}
@@ -25,7 +29,7 @@ const FilmCard = (props: Props) => {
                   d="  M16.842,3.548l3.29,6.984c0.137,0.29,0.401,0.491,0.707,0.538l7.357,1.12c0.77,0.117,1.077,1.108,0.52,1.677l-5.324,5.436  c-0.221,0.226-0.322,0.551-0.27,0.87l1.257,7.676c0.131,0.803-0.673,1.416-1.362,1.036l-6.58-3.624c-0.273-0.151-0.6-0.151-0.873,0  l-6.58,3.624c-0.688,0.379-1.493-0.233-1.362-1.036l1.257-7.676c0.052-0.319-0.049-0.644-0.27-0.87l-5.324-5.436  c-0.557-0.569-0.25-1.56,0.52-1.677l7.357-1.12c0.306-0.047,0.57-0.248,0.707-0.538l3.29-6.984  C15.503,2.817,16.497,2.817,16.842,3.548z"
                   fill="none"
                   id="XMLID_16_"
-                  stroke="#e7be35"
+                  stroke="#898989"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeMiterlimit="10"
@@ -41,11 +45,11 @@ const FilmCard = (props: Props) => {
               </svg>
             </div>
           </div>
-          <h2 className={styles.title}>The Dark Knight</h2>
-          <p className={styles.year}>2022</p>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.year}>{year.slice(0,4)}</p>
         </div>
       </div>
-      <img className={styles.filmCover} src={filmCover} alt="" />
+      <img className={styles.filmCover} src={cover} alt="" />
     </div>
   );
 };

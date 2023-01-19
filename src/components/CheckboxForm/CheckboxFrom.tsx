@@ -1,38 +1,18 @@
 import styles from './CheckboxFrom.module.scss';
+import genres from '../../assets/genres.json'
+
 
 type Props = {};
 
-const checkList = [
-  'боевик',
-  'приключения',
-  'мультфильм',
-  'комедия',
-  'криминал',
-  'боевик',
-  'приключения',
-  'мультфильм',
-  'комедия',
-  'криминал',
-  'боевик',
-  'приключения',
-  'мультфильм',
-  'комедия',
-  'криминал',
-  'боевик',
-  'приключения',
-  'мультфильм',
-  'комедия',
-  'криминал',
-];
 
 const CheckboxFrom = (props: Props) => {
   return (
     <form className={styles.form}>
-      {checkList.map((item, index) => (
-          <label className={styles.label} key={index}>
+      {genres.map(({id, name}) => (
+          <label className={styles.label} key={id}>
             <input className={styles.realCheckbox} type="checkbox" />
             <span className={styles.customCheckbox}></span>
-            {item}
+            {name}
           </label>
       ))}
     </form>

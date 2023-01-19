@@ -4,6 +4,7 @@ import { Pagination } from '../Pagination/Pagination';
 import { Sort } from '../Sort/Sort';
 import styles from './Filters.module.scss';
 
+
 type Props = {};
 
 const sortList = [
