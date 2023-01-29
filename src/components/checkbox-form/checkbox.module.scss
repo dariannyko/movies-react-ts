@@ -48,11 +48,6 @@
   align-items: center;
 }
 
-.form {
-  overflow-y: auto;
-  margin: 0 0 20px;
-}
-
 .form::-webkit-scrollbar {
   width: 10px;
 }
@@ -66,5 +61,3 @@
   background-color: rgb(134, 134, 134);
   border-radius: 100px;
 }
-
-

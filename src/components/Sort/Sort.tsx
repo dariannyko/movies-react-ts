@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import styles from './Sort.module.scss';
-import filmsList from '../../assets/films.json';
+import { SortPayload } from '../../App';
+import styles from './sort.module.scss';
 
 type Props = {
   title: string;
   sortList: string[];
   sortItem: string;
-  sort: (value: string) => void;
-  setSort: (value: string) => void;
+  sortType:  string | ((value: string) => void);
+  rateFilms: ((firstValue:string, secondValue:SortPayload)=> void) | null;
+
 };
 
-const Sort = ({ title, sortList, sortItem, setSort, rateFilms }: Props) => {
+const Sort = ({ title, sortList, sortItem, rateFilms, sortType }: Props) => {
+  
   const [isVisible, setIsVisible] = useState(false);
 
   return (
-
-    
     <div className={styles.sort}>
       <div className={styles.sortTitle}>{title}</div>
       <div className={styles.sortContainer}>
@@ -45,13 +45,13 @@ const Sort = ({ title, sortList, sortItem, setSort, rateFilms }: Props) => {
             <li
               key={index}
               onClick={() => {
-                setSort(item);
-                // if (title === 'Сортировать по') {
-                //   rateFilms(item, undefined)
-                // } else {
-                //   rateFilms(undefined, item)
-                // }
-                rateFilms(item)
+                
+                if(typeof sortType === 'function') {
+                  sortType(item);
+                }
+                if(rateFilms && typeof sortType ==='string') {
+                  rateFilms(sortType, item)
+                }
                 setIsVisible(false);
               }}
             >

@@ -1,0 +1,103 @@
+.modal-window {
+  min-width: 320px;
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px 35px;
+  border-radius: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 500px;
+
+  background-color: #fff;
+  color: #898989;
+}
+
+.fade-block {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(2, 2, 2, 0.9);
+  transition: opacity 0.3s ease-in, visibility 0s linear;
+  z-index: 99;
+}
+
+.modal-header {
+  margin: 0 0 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.subtitle {
+  margin: 0 0 10px;
+}
+
+.button {
+  padding: 10px 30px;
+  margin: 20px 0 0 ;
+  border-radius: 5px;
+  background-color: #9069ff;
+  color: #fff;
+  font-size: 16px;
+  transition: background-color 0.2s linear;
+
+  &:hover {
+    background-color: #7e51f9;
+  }
+}
+
+
+.modal-input {
+  width: 100%;
+  padding: 14px;
+  background: #f3f6f6;
+  border-radius: 12px;
+  color: #0f0c22;
+  margin: 0 0 30px;
+
+  &:last-child {
+    margin: 0 0 60px;
+  }
+}
+.input-data {
+  position: relative;
+}
+
+.modal-warning {
+  font-size: 14px;
+  color: #ea3736;
+}
+
+#modal-name .modal-warning {
+  top: 60px;
+}
+
+.modal-input::placeholder {
+  color: #797c7b;
+}
+
+#modal-name .input-data {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 60px;
+  column-gap: 20px;
+}
+
+#modal-name .modal-input {
+  margin: 0;
+}
+
+.button-close {
+    img {
+        width: 15px;
+        height: auto;
+    }
+}

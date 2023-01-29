@@ -1,20 +1,65 @@
 import { combineReducers } from 'redux';
 import filmList from '../assets/films.json';
-import { RATING, YEAR, YEARS, GENRES, APPLY } from './actions';
+import {
+  APPLY_RATING,
+  APPLY_YEAR,
+  APPLY_GENRES,
+  APPLY_FAVORITES,
+  AUTHORIZE,
+  MODAL,
+} from './actions';
+import { getLocalItem } from '../assets/shared/get-local';
+import { Film } from '../assets/shared/types';
 
-const sortRating = (state = filmList, action) => {
+export interface ReduxState {
+  applyFilters: {
+    initList: Film;
+    sortBy: string;
+    genres: number[];
+    year: string;
+    favorites: string;
+  };
+  authorize: boolean;
+  showModal: boolean;
+}
+
+export const initialRating = 'Популярные по убыванию';
+export const initialYear = 'Показать все';
+export const initialFavorites = 'none';
+export const initialGenres: number[] = [];
+
+const initialState = {
+  initList: filmList,
+  sortBy: initialRating,
+  genres: initialGenres,
+  year: initialYear,
+  favorites: initialFavorites,
+};
+
+interface ApplyAllAction {
+  type: string;
+  payload: string;
+}
+interface ApplyGenresAction {
+  type: string;
+  payload: number[];
+}
+
+type FilterAction = ApplyAllAction | ApplyGenresAction;
+
+const applyFilters = (state = initialState, action: FilterAction) => {
   switch (action.type) {
-    case RATING.popularDesc: {
-      return [...state].sort((a, b) => b.popularity - a.popularity);
+    case APPLY_RATING: {
+      return { ...state, sortBy: action.payload };
     }
-    case RATING.popularAsc: {
-      return [...state].sort((a, b) => a.popularity - b.popularity);
+    case APPLY_YEAR: {
+      return { ...state, year: action.payload };
     }
-    case RATING.asc: {
-      return [...state].sort((a, b) => a.vote_average - b.vote_average);
+    case APPLY_GENRES: {
+      return { ...state, genres: action.payload };
     }
-    case RATING.desc: {
-      return [...state].sort((a, b) => b.vote_average - a.vote_average);
+    case APPLY_FAVORITES: {
+      return { ...state, favorites: action.payload };
     }
     default: {
       return state;
@@ -22,19 +67,17 @@ const sortRating = (state = filmList, action) => {
   }
 };
 
-const sortYear = (state = [], action) => {
+interface AuthorizationAction {
+  type: string;
+  payload: boolean;
+}
+const userKey = 'isUser';
+const initialUserStatus: boolean = getLocalItem(userKey) || false;
+
+const authorize = (state = initialUserStatus, action: AuthorizationAction) => {
   switch (action.type) {
-    case YEAR: {
-      for (let key in YEARS) {
-        if (action.payload.year === YEARS.all) {
-          return action.payload.films;
-        }
-        if (YEARS[key] === action.payload.year) {
-          return action.payload.films.filter(
-            (film) => film.release_date.slice(0, 4) === YEARS[key]
-          );
-        }
-      }
+    case AUTHORIZE: {
+      return action.payload;
     }
     default: {
       return state;
@@ -42,34 +85,25 @@ const sortYear = (state = [], action) => {
   }
 };
 
-const sortGenres = (state = filmList, action) => {
+interface ModalAction {
+  type: string;
+  payload: boolean;
+}
+const initialModal = false;
+
+const showModal = (state = initialModal, action: ModalAction) => {
   switch (action.type) {
-    case GENRES: {
-      return action.payload.films.filter((item) =>
-        action.payload.id.every((id) => item.genre_ids.includes(id))
-      );
+    case MODAL: {
+      return action.payload;
     }
     default: {
       return state;
     }
   }
 };
-// const applyAll = (state = filmList, action) => {
-//   switch (action.type) {
-//     case APPLY: {
-//       return action.payload;
-//     }
-//     default: {
-//       return state;
-//     }
-//   }
-// };
-
-
 
 export const rootReducer = combineReducers({
-  sortRating: sortRating,
-  sortYear: sortYear,
-  sortGenres: sortGenres,
-  // applyAll: applyAll,
+  applyFilters,
+  authorize,
+  showModal,
 });

@@ -1,19 +1,20 @@
-import { Button } from '../Button/Button';
-import { CheckboxFrom } from '../CheckboxForm/CheckboxFrom';
-import { Pagination } from '../Pagination/Pagination';
-import { Sort } from '../Sort/Sort';
-import styles from './Filters.module.scss';
-
-type Props = {
-  filmsPerPage: number;
-  currentPage: number;
-  setCurrentPage: (value: number) => void;
-  rating: string;
-  yearSort: string;
-  rateFilms: (value: string) => void;
-  sortYearFilms: (value: string) => void;
-  setRating: (value: string) => void;
-};
+import { useOutletContext, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ReduxState } from '../../store/reducers';
+import {
+  APPLY_RATING,
+  APPLY_YEAR,
+  APPLY_GENRES,
+  APPLY_FAVORITES,
+} from '../../store/actions';
+import { Button } from '../button/button';
+import { CheckboxFrom } from '../checkbox-form/checkbox-form';
+import { Pagination } from '../pagination/pagination';
+import { Sort } from '../sort/sort';
+import { ContextType } from '../../App';
+import genresList from '../../assets/genres.json';
+import emoji from '../../assets/img/magnifier-icon.svg';
+import styles from './filters.module.scss';
 
 const sortList = [
   'Популярные по убыванию',
@@ -21,49 +22,61 @@ const sortList = [
   'Рейтинг по убыванию',
   'Рейтинг по возрастанию',
 ];
-const yearList = ['all', '2020', '2019', '2018', '2017'];
+const yearList = ['Показать все', '2020', '2019', '2018', '2017'];
+const favoriteList = ['none', 'Избранное', 'Смотреть позже'];
 
-const Filters = ({
-  filmsPerPage,
-  currentPage,
-  setCurrentPage,
+type Props = {
+  pages: number;
+  currentPage: number;
+  setCurrentPage: (value: number) => void;
+};
 
-  rating,
-  yearSort,
-  setRating,
-  setYearSort,
-  setGenres,
-  genres,
+const Filters = ({ pages, currentPage, setCurrentPage }: Props) => {
+  const { changeFavoritesType, resetFilters, changeSortType } =
+    useOutletContext<ContextType>();
+  const currentStore = useSelector((state: ReduxState) => state.applyFilters);
 
-  rateFilms,
-  sortYearFilms,
-  applyFilters,
-  sortGenresFilms,
-  
-}: Props) => {
   return (
     <aside className={styles.container}>
       <h1 className={styles.title}>Фильтры</h1>
       <div className={styles.filtersButton}>
-        <Button children={'Сбросить все фильтры'} />
+        <Button children={'Сбросить все фильтры'} onClick={resetFilters} />
       </div>
       <Sort
         title={'Сортировать по'}
         sortList={sortList}
-        sortItem={rating}
-        setSort = {setRating}
-        rateFilms = {rateFilms}
+        sortItem={currentStore.sortBy}
+        sortType={APPLY_RATING}
+        rateFilms={changeSortType}
       />
       <Sort
         title={'Год релиза'}
         sortList={yearList}
-        sortItem={yearSort}
-        setSort = {setYearSort}
-        rateFilms = {sortYearFilms}
+        sortItem={currentStore.year}
+        sortType={APPLY_YEAR}
+        rateFilms={changeSortType}
       />
-      <CheckboxFrom setGenres={setGenres} genres={genres} sortGenresFilms={sortGenresFilms}/>
+      <CheckboxFrom
+        genresList={genresList}
+        genres={currentStore.genres}
+        sortType={APPLY_GENRES}
+        changeGenres={changeSortType}
+      />
+      <Sort
+        title={'Избранное'}
+        sortList={favoriteList}
+        sortItem={currentStore.favorites}
+        sortType={APPLY_FAVORITES}
+        rateFilms={changeFavoritesType}
+      />
+      <Link to={`/search`}>
+        <div className={styles.searchFilm}>
+          <img src={emoji} alt="Эмоджи" />
+          <p>Не знаю, что посмотреть</p>
+        </div>
+      </Link>
       <Pagination
-        filmsPerPage={filmsPerPage}
+        pages={pages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

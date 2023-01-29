@@ -1,139 +1,156 @@
 import { useState, useEffect } from 'react';
-import { Filters } from './components/Filters/Filters';
-import { Header } from './components/Header/Header';
-import { Films } from './components/Films/Films';
-// import { getFilms } from './ts/request';
+import { useDispatch, useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
+import { Header } from './components/header/header';
+import { Modal } from './components/modal/modal';
+import { MODAL } from './store/actions';
+import {
+  initialRating,
+  initialYear,
+  initialGenres,
+  initialFavorites,
+} from './store/reducers';
+import { ReduxState } from './store/reducers';
+import {
+  sortByRating,
+  sortByYear,
+  sortByFavorites,
+  sortByGenres,
+} from './assets/shared/filters';
+import { Film } from './assets/shared/types';
+import { getLocalItem } from './assets/shared/get-local';
 import filmsList from './assets/films.json';
-import genres from './assets/genres.json';
-import { Film } from '../src/assets/shared/Types';
-import { useDispatch,useSelector } from 'react-redux';
-import { YEAR, GENRES, APPLY } from './store/actions';
 import './App.scss';
-// const filmsUrl = 'https://newfilms.free.beeceptor.com/films';
 
-const initialFilms = 10;
-const startPage = 1;
-const initialRating = 'Популярные по убыванию';
-const initialYear = 'all';
+export const isDetailsOpen = 'isFilmDetails';
+export const userKey = 'isUser';
 
- const RATING = {
-  popularDesc: 'Популярные по убыванию',
-  popularAsc: 'Популярные по возрастанию',
-  desc: 'Рейтинг по убыванию',
-  asc: 'Рейтинг по возрастанию',
+interface InitialFilters {
+  APPLY_RATING: string;
+  APPLY_YEAR: string;
+  APPLY_GENRES: number[];
+}
+const initialFilters: InitialFilters = {
+  APPLY_RATING: initialRating,
+  APPLY_YEAR: initialYear,
+  APPLY_GENRES: initialGenres,
 };
+export type SortPayload = string | number[];
 
+export interface ContextType {
+  changeFavoritesType: (firstValue: string, secondValue: SortPayload) => void;
+  isLoading: boolean;
+  isFilmDetails: boolean;
+  setIsFilmDetails: (value: boolean) => void;
+  currentList: Film[];
+  resetFilters: () => void;
+  changeSortType: (firstValue: string, secondValue: SortPayload) => void;
+}
 
 function App() {
-  const [films, setFilms] = useState<Film[]>([]);
-
   const dispatch = useDispatch();
-  
-  const currentList = useSelector((state) => state.sortRating);
-  const yearList = useSelector((state) => state.sortYear);
-  const genresList = useSelector((state)=> state.sortGenres);
 
-  const [rating, setRating] = useState(initialRating);
-  const [yearSort, setYearSort] = useState(initialYear);
-  const [genres, setGenres] = useState([]);
+  const [currentList, setCurrentList] = useState(filmsList);
+  const currentStore = useSelector((state: ReduxState) => state.applyFilters);
+  const userStatus = useSelector((state: ReduxState) => state.authorize);
+  const isModal = useSelector((state: ReduxState) => state.showModal);
 
-  const [currentPage, setCurrentPage] = useState(startPage);
-  const [filmsPerPage] = useState(initialFilms);
+  const [isFilmDetails, setIsFilmDetails] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setFilms(filmsList);
+    setCurrentList(filmsList);
     setIsLoading(false);
+    if (getLocalItem(isDetailsOpen)) {
+      setIsFilmDetails(true);
+    }
   }, []);
 
+  useEffect(() => {
+    const newList = applyFilters();
+    setCurrentList(newList);
+  }, [
+    currentStore.sortBy,
+    currentStore.year,
+    currentStore.genres,
+    currentStore.favorites,
+  ]);
 
-  const rateFilms = (rating: string) => {
+  const changeSortType = (actionType: string, sortType: SortPayload) => {
     dispatch({
-      type: rating,
-      payload: films,
-    });
-    // if(rating === RATING.popularDesc) {
-    //   dispatch({
-    //     type: APPLY,
-    //     payload: [...filmsList].sort((a, b) => b.popularity - a.popularity)
-    //   });
-    // }
-    // if(rating === RATING.popularAsc) {
-    //   dispatch({
-    //     type: APPLY,
-    //     payload: [...filmsList].sort((a, b) => a.popularity - b.popularity)
-    //   });
-    // }
-    
-    // if(rating === RATING.asc) {
-    //   dispatch({
-    //     type: APPLY,
-    //     payload: [...filmsList].sort((a, b) => a.vote_average - b.vote_average)
-    //   });
-    // }
-    // if(rating === RATING.desc) {
-    //   dispatch({
-    //     type: APPLY,
-    //     payload: [...filmsList].sort((a, b) => b.vote_average - a.vote_average)
-    //   });
-    // }
-  };
-
-  const sortYearFilms = (year:string) => {
-    dispatch({
-      type: YEAR,
-      payload: {
-        year: year,
-        films: films,
-      },
-    });
-  };
-  const sortGenresFilms = (id:number) => {
-    dispatch({
-      type: GENRES,
-      payload: {
-        id: id,
-        films: films,
-      }
+      type: actionType,
+      payload: sortType,
     });
   };
 
-  const applyFilters = (rate = rating, year = yearSort) => { 
-
-    
+  const applyFilters = () => {
+    let films = filmsList;
+    if (currentStore.favorites) {
+      films = sortByFavorites(currentStore.favorites, filmsList);
+    }
+    if (currentStore.sortBy) {
+      films = sortByRating(currentStore.sortBy, films);
+    }
+    if (currentStore.year) {
+      films = sortByYear(currentStore.year, films);
+    }
+    if (currentStore.genres) {
+      films = sortByGenres(currentStore.genres, films);
+    }
+    return films;
   };
-  
 
+  const resetFilters = () => {
+    for (let key in initialFilters) {
+      dispatch({
+        type: key,
+        payload: initialFilters[key as keyof InitialFilters],
+      });
+    }
+  };
 
+  const changeFavoritesType = (actionType: string, listType: string) => {
+    if (!userStatus && listType === initialFavorites) {
+      dispatch({
+        type: actionType,
+        payload: listType,
+      });
+      return;
+    }
+    if (!userStatus) {
+      dispatch({
+        type: MODAL,
+        payload: true,
+      });
+      return;
+    }
+    resetFilters();
 
-
-  const lastFilmsIndex = currentPage * filmsPerPage;
-  const firstFilmsIndex = lastFilmsIndex - filmsPerPage;
-
-
-  const currentFilms = currentList.slice(firstFilmsIndex, lastFilmsIndex);
+    dispatch({
+      type: actionType,
+      payload: listType,
+    });
+  };
 
   return (
     <div className="App">
-      <Header />
-      <div className="container">
-        <Filters
-          filmsPerPage={filmsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          rating={rating}
-          yearSort={yearSort}
-          setRating={setRating}
-          setGenres = {setGenres}
-          genres = {genres}
-          setYearSort={setYearSort}
-          rateFilms = {rateFilms}
-          sortYearFilms={sortYearFilms}
-          applyFilters={applyFilters}
-          sortGenresFilms= {sortGenresFilms}
-        />
-        <Films currentFilms={currentFilms} isLoading={isLoading} />
-      </div>
+      {isModal && <Modal />}
+      <Header
+        isFilmDetails={isFilmDetails}
+        setIsFilmDetails={setIsFilmDetails}
+      />
+
+      <Outlet
+        context={{
+          changeFavoritesType: changeFavoritesType,
+          isLoading: isLoading,
+          isFilmDetails: isFilmDetails,
+          setIsFilmDetails: setIsFilmDetails,
+          currentList: currentList,
+          resetFilters: resetFilters,
+          changeSortType: changeSortType,
+        }}
+      />
     </div>
   );
 }

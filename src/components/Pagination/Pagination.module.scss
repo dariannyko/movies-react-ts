@@ -18,12 +18,12 @@
   &:hover {
     background-color: #7348ec;
   }
+
+  &:disabled {
+    background-color: #b3a0ff;
+  }
 }
 
 .text {
   text-align: center;
-}
-
-.disabled {
-  background-color: #b3a0ff;
 }
