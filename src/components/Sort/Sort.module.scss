@@ -1,0 +1,53 @@
+.sort {
+  width: 100%;
+  margin: 0 0 30px;
+}
+
+.sortTitle {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sortImg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  fill: #fff;
+}
+.selectList {
+  width: 100%;
+
+  display: block;
+  margin: 0 0 20px;
+  display: none;
+  li {
+    padding: 12px 15px;
+  }
+  li:hover {
+    background-color: #9069ff;
+  }
+}
+
+.selectList,
+.sortSelect {
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.sortSelect {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 10px;
+  padding: 12px 15px;
+
+  .text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+  }
+}

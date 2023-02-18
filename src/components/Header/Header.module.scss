@@ -1,0 +1,49 @@
+@import '../../vars';
+
+.container {
+  background-color: $medium-gray;
+}
+
+.wrapper {
+  max-width: 1900px;
+  width: 100%;
+  height: 72px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 14px;
+}
+
+.form {
+  max-width: 350px;
+  width: 100%;
+  display: flex;
+  column-gap: 15px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background-color: #000;
+
+  input {
+    width: 100%;
+    background-color: transparent;
+    color: #fff;
+
+    &::placeholder {
+      color: #fff;
+    }
+  }
+
+  .search {
+    flex-shrink: 0;
+  }
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: $accent-purple;
+  color: inherit;
+  font-size: inherit;
+}
