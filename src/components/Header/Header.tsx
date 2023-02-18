@@ -1,13 +1,47 @@
-import { Button } from '../Button/Button';
-import styles from './Header.module.scss';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '../../store/reducers';
+import { MODAL, AUTHORIZE } from '../../store/actions';
+import { Button } from '../button/button';
+import { userKey, isDetailsOpen } from '../../App';
+import logo from '../../assets/img/logo.svg';
+import styles from './header.module.scss';
 
-type Props = {};
+type Props = {
+  isFilmDetails: boolean;
+  setIsFilmDetails: (value: boolean) => void;
+};
 
-const Header = (props: Props) => {
+const Header = ({ isFilmDetails, setIsFilmDetails }: Props) => {
+  const dispatch = useDispatch();
+  const userStatus = useSelector((state: ReduxState) => state.authorize);
+
+  const logIn = () => {
+    if (!userStatus) {
+      dispatch({
+        type: MODAL,
+        payload: true,
+      });
+    } else {
+      dispatch({
+        type: AUTHORIZE,
+        payload: false,
+      });
+      localStorage.removeItem(userKey);
+    }
+  };
+  const navigate = useNavigate();
+  const returnBack = () => {
+    setIsFilmDetails(false);
+    localStorage.removeItem(isDetailsOpen);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <a href="#">Home</a>
+        <Link to={`/`} onClick={returnBack}>
+          <img src={logo} alt="Logo" />
+        </Link>
         <form action="#" className={styles.form}>
           <svg
             className={styles.search}
@@ -24,7 +58,20 @@ const Header = (props: Props) => {
           </svg>
           <input type="text" placeholder="Название..." />
         </form>
-        <Button children={'Логин'} />
+        <div>
+          {isFilmDetails && (
+            <button
+              className={styles.back}
+              onClick={() => {
+                returnBack();
+                navigate(-1);
+              }}
+            >
+              Назад
+            </button>
+          )}
+          <Button children={!userStatus ? 'Логин' : 'Выйти'} onClick={logIn} />
+        </div>
       </div>
     </div>
   );

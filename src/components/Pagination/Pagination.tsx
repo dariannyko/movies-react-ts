@@ -1,31 +1,51 @@
-import styles from './Pagination.module.scss';
-import films from '../../assets/films.json';
+import { useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { ContextType } from '../../App';
+import styles from './pagination.module.scss';
 
 const startPage = 1;
 
 type Props = {
-  filmsPerPage: number;
+  pages: number;
   currentPage: number;
   setCurrentPage: (value: number) => void;
 };
 
-const Pagination = ({ filmsPerPage, currentPage, setCurrentPage }: Props) => {
-  const pages = Math.ceil(films.length / filmsPerPage);
+const Pagination = ({ pages, currentPage, setCurrentPage }: Props) => {
+  const { currentList } = useOutletContext<ContextType>();
+
+  useEffect(() => {
+    if (currentPage > pages) {
+      setCurrentPage(startPage);
+    }
+  }, [currentList]);
+
   const paginate = (number: number) => {
     if (number > pages) return;
     if (number < startPage) return;
     setCurrentPage(number);
   };
-  
 
   return (
     <>
       <div className={styles.container}>
-        <button className={`${styles.button} ${currentPage <= startPage ? styles.disabled : ''}`} onClick={() => paginate(currentPage-1)}>Назад</button>
-        <button className={`${styles.button} ${currentPage >= pages ? styles.disabled : ''}`} onClick={() => paginate(currentPage+1)}>Вперед</button>
+        <button
+          className={styles.button}
+          disabled = {currentPage <= pages ? true : false}
+          onClick={() => paginate(currentPage - 1)}
+        >
+          Назад
+        </button>
+        <button
+          className={styles.button}
+          disabled = {currentPage >= pages ? true : false}
+          onClick={() => paginate(currentPage + 1)}
+        >
+          Вперед
+        </button>
       </div>
       <div className={styles.text}>
-        {currentPage} из {pages}
+        {currentPage} из {pages ? pages : startPage}
       </div>
     </>
   );
