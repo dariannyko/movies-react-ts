@@ -31,7 +31,7 @@ const Pagination = ({ pages, currentPage, setCurrentPage }: Props) => {
       <div className={styles.container}>
         <button
           className={styles.button}
-          disabled = {currentPage <= pages ? true : false}
+          disabled = {currentPage <= startPage ? true : false}
           onClick={() => paginate(currentPage - 1)}
         >
           Назад

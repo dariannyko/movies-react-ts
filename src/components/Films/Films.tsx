@@ -2,7 +2,7 @@ import { useOutletContext } from 'react-router-dom';
 import { FilmCard } from './film-card';
 import { Loader } from '../loader/loader';
 import { ContextType } from '../../App';
-import { Film } from '../../assets/shared/types';
+import { Film } from '../../shared/types';
 import styles from './films.module.scss';
 
 const loader = [...new Array(10)];

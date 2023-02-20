@@ -8,8 +8,8 @@ import {
   AUTHORIZE,
   MODAL,
 } from './actions';
-import { getLocalItem } from '../assets/shared/get-local';
-import { Film } from '../assets/shared/types';
+import { getLocalItem } from '../shared/get-local';
+import { Film } from '../shared/types';
 
 export interface ReduxState {
   applyFilters: {

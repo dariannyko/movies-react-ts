@@ -5,8 +5,8 @@ import { MODAL } from '../../store/actions';
 import { ReduxState } from '../../store/reducers';
 import filmsList from '../../assets/films.json';
 import { ContextType, isDetailsOpen } from '../../App';
-import { getLocalItem } from '../../assets/shared/get-local';
-import { Film } from '../../assets/shared/types';
+import { getLocalItem } from '../../shared/get-local';
+import { Film } from '../../shared/types';
 import styles from './film-card.module.scss';
 
 const imageUrl = 'https://image.tmdb.org/t/p/w500';
