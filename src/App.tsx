@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import { Header } from './components/_header/_header';
+import { Header } from './components/header/header';
 import { Modal } from './components/modal/modal';
 import { MODAL } from './store/actions';
 import {

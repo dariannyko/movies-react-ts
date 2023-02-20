@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
 import { usePagination } from '../../hooks/use-pagination';
-import { Sort } from '../../components/_sort/_sort';
-import { FilmCard } from '../../components/_films/_film-card';
+import { Sort } from '../../components/sort/sort';
+import { FilmCard } from '../../components/films/film-card';
 import { Film } from '../../shared/types';
 import {
   sortByGenres,
