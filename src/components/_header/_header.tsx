@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReduxState } from '../../store/reducers';
 import { MODAL, AUTHORIZE } from '../../store/actions';
-import { Button } from '../button/button';
+import { Button } from '../_button/_button';
 import { userKey, isDetailsOpen } from '../../App';
 import logo from '../../assets/img/logo.svg';
 import styles from './header.module.scss';

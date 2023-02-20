@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
-import { Filters } from '../components/filters/filters';
-import { Films } from '../components/films/films';
+import { Filters } from '../components/_filters/_filters';
+import { Films } from '../components/_films/_films';
 import { usePagination } from '../hooks/use-pagination';
 import { ContextType } from '../App';
 

@@ -7,10 +7,10 @@ import {
   APPLY_GENRES,
   APPLY_FAVORITES,
 } from '../../store/actions';
-import { Button } from '../button/button';
+import { Button } from '../_button/_button';
 import { CheckboxFrom } from '../checkbox-form/checkbox-form';
-import { Pagination } from '../pagination/pagination';
-import { Sort } from '../sort/sort';
+import { Pagination } from '../_pagination/_pagination';
+import { Sort } from '../_sort/_sort';
 import { ContextType } from '../../App';
 import genresList from '../../assets/genres.json';
 import emoji from '../../assets/img/magnifier-icon.svg';

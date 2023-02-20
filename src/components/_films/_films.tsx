@@ -1,6 +1,6 @@
 import { useOutletContext } from 'react-router-dom';
-import { FilmCard } from './film-card';
-import { Loader } from '../loader/loader';
+import { FilmCard } from './_film-card';
+import { Loader } from '../_loader/_loader';
 import { ContextType } from '../../App';
 import { Film } from '../../shared/types';
 import styles from './films.module.scss';
