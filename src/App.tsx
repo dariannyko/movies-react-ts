@@ -16,9 +16,9 @@ import {
   sortByYear,
   sortByFavorites,
   sortByGenres,
-} from './assets/shared/filters';
-import { Film } from './assets/shared/types';
-import { getLocalItem } from './assets/shared/get-local';
+} from './shared/filters';
+import { Film } from './shared/types';
+import { getLocalItem } from './shared/get-local';
 import filmsList from './assets/films.json';
 import './App.scss';
 

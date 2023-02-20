@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Film } from '../assets/shared/types';
+import { Film } from '../shared/types';
 
 export const usePagination = (filmsPerPage: number, currentList: Film[]) => {
   const startPage = 1;

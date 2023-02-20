@@ -3,14 +3,14 @@ import { useOutletContext, Link } from 'react-router-dom';
 import { usePagination } from '../../hooks/use-pagination';
 import { Sort } from '../../components/sort/sort';
 import { FilmCard } from '../../components/films/film-card';
-import { Film } from '../../assets/shared/types';
+import { Film } from '../../shared/types';
 import {
   sortByGenres,
   VOTE,
   sortByVote,
   POPULARITY,
   sortByPopularity,
-} from '../../assets/shared/filters';
+} from '../../shared/filters';
 import genresList from '../../assets/genres.json';
 import filmList from '../../assets/films.json';
 import { ContextType } from '../../App';

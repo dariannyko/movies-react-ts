@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import { rootReducer } from './store/reducers';
+import { store } from './store/store';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import { Home } from './pages/home';
@@ -10,7 +9,6 @@ import { Search } from './pages/search/search';
 import { FilmDetails } from './pages/film-details/film-details';
 import './index.css';
 
-export const store = createStore(rootReducer);
 const router = createBrowserRouter([
   {
     path: '/',
