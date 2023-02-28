@@ -14,3 +14,23 @@ export interface Film {
   vote_average: number;
   vote_count: number;
 }
+
+export interface InitialFilters {
+  APPLY_RATING: string;
+  APPLY_YEAR: string;
+  APPLY_GENRES: number[];
+}
+
+export type SortPayload = string | number[];
+
+export interface PaginationResult {
+  pages: number;
+  currentPage: number;
+  setCurrentPage: (value: number) => void;
+  currentFilms: Film[];
+}
+
+export interface GenresType {
+  id: number;
+  name: string;
+}

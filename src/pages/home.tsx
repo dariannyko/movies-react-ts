@@ -1,17 +1,16 @@
-import { useOutletContext } from 'react-router-dom';
 import { Filters } from '../components/filters/filters';
 import { Films } from '../components/films/films';
 import { usePagination } from '../hooks/use-pagination';
-import { ContextType } from '../App';
+import { useSelector } from 'react-redux';
+import { ReduxState } from '../store/reducers/state-types';
 
 const filmsPerPage = 10;
 
-type Props = {};
+const Home = () => {
+  const currentStore = useSelector((state: ReduxState) => state.applyFilters);
+  const currentList = currentStore.initList;
 
-const Home = (props: Props) => {
-  const { currentList } = useOutletContext<ContextType>();
-
-  const [pages, currentPage, setCurrentPage, currentFilms] = usePagination(
+  const { pages, currentPage, setCurrentPage, currentFilms } = usePagination(
     filmsPerPage,
     currentList
   );

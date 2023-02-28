@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { SortPayload } from '../../App';
+import { SortPayload } from '../../shared/types';
 import styles from './checkbox.module.scss';
 
-
-type Props = {
+interface CheckboxProps {
   id: number;
   name: string;
   genres: number[];
   sortType: string;
   changeGenres: (firstValue: string, secondValue: SortPayload) => void;
-};
+}
 
 const Checkbox = ({
   id,
@@ -17,7 +16,7 @@ const Checkbox = ({
   genres,
   changeGenres,
   sortType,
-}: Props) => {
+}: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -25,7 +24,7 @@ const Checkbox = ({
       <input
         className={styles.realCheckbox}
         type="checkbox"
-        checked={genres.length ? isChecked : false}
+        checked={genres?.length ? isChecked : false}
         onChange={() => {
           setIsChecked(!isChecked);
           if (!isChecked) {
@@ -46,3 +45,4 @@ const Checkbox = ({
 };
 
 export { Checkbox };
+export type { CheckboxProps };

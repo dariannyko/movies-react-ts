@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { ContextType } from '../../App';
+import { OutletContextType } from '../../router/outlet-context-type';
+import { startPage } from '../../hooks/use-pagination';
 import styles from './pagination.module.scss';
 
-const startPage = 1;
-
-type Props = {
+interface PaginationProps {
   pages: number;
   currentPage: number;
   setCurrentPage: (value: number) => void;
-};
+}
 
-const Pagination = ({ pages, currentPage, setCurrentPage }: Props) => {
-  const { currentList } = useOutletContext<ContextType>();
+const Pagination = ({
+  pages,
+  currentPage,
+  setCurrentPage,
+}: PaginationProps) => {
+  const { currentList } = useOutletContext<OutletContextType>();
 
   useEffect(() => {
     if (currentPage > pages) {
@@ -26,19 +29,22 @@ const Pagination = ({ pages, currentPage, setCurrentPage }: Props) => {
     setCurrentPage(number);
   };
 
+  const isPrev = currentPage <= startPage ? true : false;
+  const isNext = currentPage >= pages ? true : false;
+
   return (
     <>
       <div className={styles.container}>
         <button
           className={styles.button}
-          disabled = {currentPage <= startPage ? true : false}
+          disabled={isPrev}
           onClick={() => paginate(currentPage - 1)}
         >
           Назад
         </button>
         <button
           className={styles.button}
-          disabled = {currentPage >= pages ? true : false}
+          disabled={isNext}
           onClick={() => paginate(currentPage + 1)}
         >
           Вперед
@@ -52,3 +58,4 @@ const Pagination = ({ pages, currentPage, setCurrentPage }: Props) => {
 };
 
 export { Pagination };
+export type { PaginationProps };

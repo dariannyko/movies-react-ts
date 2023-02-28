@@ -4,58 +4,68 @@ import { usePagination } from '../../hooks/use-pagination';
 import { Sort } from '../../components/sort/sort';
 import { FilmCard } from '../../components/films/film-card';
 import { Film } from '../../shared/types';
-import {
-  sortByGenres,
-  VOTE,
-  sortByVote,
-  POPULARITY,
-  sortByPopularity,
-} from '../../shared/filters';
 import genresList from '../../assets/genres.json';
-import filmList from '../../assets/films.json';
-import { ContextType } from '../../App';
 import styles from './search.module.scss';
+import {
+  APPLY_GENRE_NAME,
+  APPLY_MARK,
+  APPLY_POPULARITY,
+  setSearchParams,
+} from '../../store/actions';
+import { OutletContextType } from '../../router/outlet-context-type';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '../../store/reducers/state-types';
+import { POPULARITY, VOTE } from '../../shared/filters/filters-const';
 
 const currentGenresList = genresList.map((item) => item.name);
 const filmMarkList = Object.values(VOTE);
 const popularityList = Object.values(POPULARITY);
 const initialState = 'Выбрать';
-const initialGenre = { id: 1, name: 'Выбрать' };
+const filmsPerPage = 1;
 
-type Props = {};
-const Search = (props: Props) => {
-  const { setIsFilmDetails } = useOutletContext<ContextType>();
-  const [currentGenreName, setCurrentGenreName] = useState<string>(
-    initialGenre.name
-  );
-  const [filmMark, setFilmMark] = useState<string>(initialState);
-  const [popularity, setPopularity] = useState<string>(initialState);
-  const [currentFilmsList, setCurrentFilmsList] = useState<Film[]>([]);
+const Search = () => {
   const [isWarning, setIsWarning] = useState(false);
-  const filmsPerPage = 1;
-  const [pages, currentPage, setCurrentPage, currentFilms] = usePagination(
-    filmsPerPage,
-    currentFilmsList
+  const dispatch = useDispatch();
+  const currentStore = useSelector(
+    (state: ReduxState) => state.applySearchParams
   );
+  const { pages, currentPage, setCurrentPage, currentFilms } = usePagination(
+    filmsPerPage,
+    currentStore.currentFilmsList
+  );
+  const filmId = currentStore.currentFilmsList[currentPage - 1]?.id;
+  const { changeSortType } = useOutletContext<OutletContextType>();
+  console.log(currentStore);
 
   const applyFilters = () => {
     if (
-      filmMark !== initialState &&
-      popularity !== initialState &&
-      currentGenreName !== initialGenre.name
+      currentStore.filmMark !== initialState &&
+      currentStore.popularity !== initialState &&
+      currentStore.genreName !== initialState
     ) {
-      let list = filmList;
-      const genre = genresList.find((item) => item.name === currentGenreName);
-
-      if (genre) {
-        list = sortByGenres([genre.id], list);
-      }
-      list = sortByVote(filmMark, list);
-      list = sortByPopularity(popularity, list);
-      setCurrentFilmsList(list);
+      dispatch(
+        setSearchParams({
+          filmMark: currentStore.filmMark,
+          popularity: currentStore.popularity,
+          genreName: currentStore.genreName,
+        })
+      );
     } else {
       setIsWarning(true);
       setTimeout(() => setIsWarning(false), 3000);
+    }
+  };
+
+  const filmTurns = () => {
+    setCurrentPage(currentPage + 1);
+    if (currentPage <= pages) {
+      dispatch(
+        setSearchParams({
+          filmMark: initialState,
+          popularity: initialState,
+          genreName: initialState,
+        })
+      );
     }
   };
 
@@ -66,23 +76,23 @@ const Search = (props: Props) => {
         <Sort
           title={'Жанр'}
           sortList={currentGenresList}
-          sortItem={currentGenreName}
-          sortType={setCurrentGenreName}
-          rateFilms={null}
+          sortItem={currentStore.genreName}
+          sortType={APPLY_GENRE_NAME}
+          rateFilms={changeSortType}
         />
         <Sort
           title={'Оценка фильма'}
           sortList={filmMarkList}
-          sortItem={filmMark}
-          sortType={setFilmMark}
-          rateFilms={null}
+          sortItem={currentStore.filmMark}
+          sortType={APPLY_MARK}
+          rateFilms={changeSortType}
         />
         <Sort
           title={'По популярности'}
           sortList={popularityList}
-          sortItem={popularity}
-          sortType={setPopularity}
-          rateFilms={null}
+          sortItem={currentStore.popularity}
+          sortType={APPLY_POPULARITY}
+          rateFilms={changeSortType}
         />
         {isWarning && <p className={styles.warning}>Выберите все опции!</p>}
         <button className={styles.button} onClick={applyFilters}>
@@ -123,22 +133,11 @@ const Search = (props: Props) => {
               <button
                 className={styles.button}
                 disabled={currentPage > pages ? true : false}
-                onClick={() => {
-                  setCurrentPage(currentPage + 1);
-                  if (currentPage <= pages) {
-                    setCurrentGenreName(initialGenre.name);
-                    setFilmMark(initialState);
-                    setPopularity(initialState);
-                  }
-                }}
+                onClick={filmTurns}
               >
                 Не подходит
               </button>
-              <Link
-                className={styles.button}
-                to={`/film/${currentFilmsList[currentPage - 1]?.id}`}
-                onClick={() => setIsFilmDetails(true)}
-              >
+              <Link className={styles.button} to={`/film/${filmId}`}>
                 Подходит
               </Link>
             </div>

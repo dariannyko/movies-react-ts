@@ -1,18 +1,18 @@
 import { useOutletContext } from 'react-router-dom';
 import { FilmCard } from './film-card';
 import { Loader } from '../loader/loader';
-import { ContextType } from '../../App';
+import { OutletContextType } from '../../router/outlet-context-type';
 import { Film } from '../../shared/types';
 import styles from './films.module.scss';
 
 const loader = [...new Array(10)];
 
-type Props = {
+interface FilmsProps {
   currentFilms: Film[];
-};
+}
 
-const Films = ({ currentFilms }: Props) => {
-  const { isLoading } = useOutletContext<ContextType>();
+const Films = ({ currentFilms }: FilmsProps) => {
+  const { isLoading } = useOutletContext<OutletContextType>();
 
   return (
     <section className={styles.container}>
@@ -37,3 +37,4 @@ const Films = ({ currentFilms }: Props) => {
 };
 
 export { Films };
+export type { FilmsProps };

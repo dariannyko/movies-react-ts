@@ -48,33 +48,6 @@
   line-height: 1;
 }
 
-.star {
-  width: 25px;
-  height: auto;
-  padding: 0 10px 0 0;
-  flex-shrink: 0;
-  border-right: 1px solid #2e2e2e;
-  &.active {
-    path {
-      stroke: #ffcf40;
-      fill: #ffcf40;
-    }
-  }
-}
-
-.bookmark {
-  width: 20px;
-  height: auto;
-  flex-shrink: 0;
-  padding: 0 0 0 10px;
-  &.active {
-    path {
-      stroke: #6b43d7;
-      fill: #6b43d7;
-    }
-  }
-}
-
 .images {
   display: flex;
   border-radius: 6px;

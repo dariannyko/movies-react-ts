@@ -1,45 +1,33 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxState } from '../../store/reducers';
-import { MODAL, AUTHORIZE } from '../../store/actions';
+import { ReduxState } from '../../store/reducers/root-reducer';
 import { Button } from '../button/button';
-import { userKey, isDetailsOpen } from '../../App';
+import { userKey } from '../../shared/const';
 import logo from '../../assets/img/logo.svg';
 import styles from './header.module.scss';
+import { authorizeUser, showModal } from '../../store/actions';
 
-type Props = {
-  isFilmDetails: boolean;
-  setIsFilmDetails: (value: boolean) => void;
-};
+const returnBack = -1;
 
-const Header = ({ isFilmDetails, setIsFilmDetails }: Props) => {
+const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const userStatus = useSelector((state: ReduxState) => state.authorize);
 
   const logIn = () => {
     if (!userStatus) {
-      dispatch({
-        type: MODAL,
-        payload: true,
-      });
+      dispatch(showModal(true));
     } else {
-      dispatch({
-        type: AUTHORIZE,
-        payload: false,
-      });
+      dispatch(authorizeUser(false));
       localStorage.removeItem(userKey);
     }
-  };
-  const navigate = useNavigate();
-  const returnBack = () => {
-    setIsFilmDetails(false);
-    localStorage.removeItem(isDetailsOpen);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <Link to={`/`} onClick={returnBack}>
+        <Link to={`/`}>
           <img src={logo} alt="Logo" />
         </Link>
         <form action="#" className={styles.form}>
@@ -59,12 +47,11 @@ const Header = ({ isFilmDetails, setIsFilmDetails }: Props) => {
           <input type="text" placeholder="Название..." />
         </form>
         <div>
-          {isFilmDetails && (
+          {location.pathname.slice(0, 5) === '/film' && (
             <button
               className={styles.back}
               onClick={() => {
-                returnBack();
-                navigate(-1);
+                navigate(returnBack);
               }}
             >
               Назад

@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { useDispatch} from 'react-redux';
-import { MODAL, AUTHORIZE } from '../../store/actions';
+import { useDispatch } from 'react-redux';
+import { userKey } from '../../shared/const';
+import { authorizeUser, showModal } from '../../store/actions';
 import closeIcon from '../../assets/img/close.svg';
 import styles from './modal.module.scss';
 
 const userLogin = 'dariannyko';
 const userPassword = '1234';
 
-type Props = {};
-
-const Modal = (props: Props) => {
+const Modal = () => {
   const [login, setLogin] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [isLoginWarning, setIsLoginWarning] = useState<boolean>(false);
@@ -32,22 +31,13 @@ const Modal = (props: Props) => {
       setIsPasswordWarning(true);
       return;
     }
-    dispatch({
-      type: AUTHORIZE,
-      payload: true,
-    });
-    localStorage.setItem('isUser', 'true');
-    dispatch({
-      type: MODAL,
-      payload: false,
-    });
+    dispatch(authorizeUser(true));
+    localStorage.setItem(userKey, 'true');
+    dispatch(showModal(false));
   };
 
   const closeModal = () => {
-    dispatch({
-      type: MODAL,
-      payload: false,
-    });
+    dispatch(showModal(false));
   };
 
   return (
@@ -80,7 +70,9 @@ const Modal = (props: Props) => {
           {isPasswordWarning && (
             <div className={styles.modalWarning}>Пароль введен неверно</div>
           )}
-          <button className={styles.button} type='submit'>Войти</button>
+          <button className={styles.button} type="submit">
+            Войти
+          </button>
         </form>
       </div>
     </div>
