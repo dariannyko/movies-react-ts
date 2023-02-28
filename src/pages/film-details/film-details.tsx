@@ -4,9 +4,7 @@ import styles from './film-details.module.scss';
 
 const imageUrl = 'https://image.tmdb.org/t/p/w500';
 
-type Props = {};
-
-const FilmDetails = (props: Props) => {
+const FilmDetails = () => {
   let { filmId } = useParams();
   const film = filmsList.find((item) => `${item.id}` === filmId);
 

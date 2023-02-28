@@ -1,12 +1,17 @@
 import styles from './button.module.scss';
 
-type Props = {
+interface ButtonProps {
   children: string;
-  onClick: ()=> void;
-};
+  onClick: () => void;
+}
 
-const Button = ({ children, onClick }: Props) => {
-  return <button className={styles.button} onClick={onClick}>{children}</button>;
+const Button = ({ children, onClick }: ButtonProps) => {
+  return (
+    <button className={styles.button} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export { Button };
+export type { ButtonProps };

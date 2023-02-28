@@ -1,6 +1,6 @@
 import { useOutletContext, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { ReduxState } from '../../store/reducers';
+
 import {
   APPLY_RATING,
   APPLY_YEAR,
@@ -11,10 +11,11 @@ import { Button } from '../button/button';
 import { CheckboxFrom } from '../checkbox-form/checkbox-form';
 import { Pagination } from '../pagination/pagination';
 import { Sort } from '../sort/sort';
-import { ContextType } from '../../App';
+import { OutletContextType } from '../../router/outlet-context-type';
 import genresList from '../../assets/genres.json';
 import emoji from '../../assets/img/magnifier-icon.svg';
 import styles from './filters.module.scss';
+import { ReduxState } from '../../store/reducers/state-types';
 
 const sortList = [
   'Популярные по убыванию',
@@ -25,15 +26,15 @@ const sortList = [
 const yearList = ['Показать все', '2020', '2019', '2018', '2017'];
 const favoriteList = ['none', 'Избранное', 'Смотреть позже'];
 
-type Props = {
+interface FiltersProps {
   pages: number;
   currentPage: number;
   setCurrentPage: (value: number) => void;
-};
+}
 
-const Filters = ({ pages, currentPage, setCurrentPage }: Props) => {
+const Filters = ({ pages, currentPage, setCurrentPage }: FiltersProps) => {
   const { changeFavoritesType, resetFilters, changeSortType } =
-    useOutletContext<ContextType>();
+    useOutletContext<OutletContextType>();
   const currentStore = useSelector((state: ReduxState) => state.applyFilters);
 
   return (
@@ -85,3 +86,4 @@ const Filters = ({ pages, currentPage, setCurrentPage }: Props) => {
 };
 
 export { Filters };
+export type { FiltersProps };

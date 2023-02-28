@@ -1,48 +1,10 @@
-import { Film } from './types';
-import { getLocalItem } from './get-local';
-
-const RATING = {
-  popularDesc: 'Популярные по убыванию',
-  popularAsc: 'Популярные по возрастанию',
-  desc: 'Рейтинг по убыванию',
-  asc: 'Рейтинг по возрастанию',
-};
-
-const YEARS = {
-  all: 'all',
-  2020: '2020',
-  2019: '2019',
-  2018: '2018',
-  2017: '2017',
-};
-
-interface Years {
-  all: string;
-  2020: string;
-  2019: string;
-  2018: string;
-  2017: string;
-}
-
-const FAVORITES = {
-  favoritesFilms: 'Избранное',
-  watchLater: 'Смотреть позже',
-};
-
-interface Favorites {
-  favoritesFilms: string;
-  watchLater: string;
-}
-
-export const VOTE = {
-  high: 'Высокая',
-  low: 'Низкая',
-};
-
-export const POPULARITY = {
-  popular: 'Популярный',
-  unknown: 'Неизвестный',
-};
+import { Film } from '../types';
+import { getLocalItem } from '../get-local';
+import filmList from '../../assets/films.json';
+import genresList from '../../assets/genres.json';
+import { FiltersState, SearchParamsState } from '../../store/reducers/state-types';
+import { FAVORITES, POPULARITY, RATING, VOTE, YEARS } from './filters-const';
+import { Favorites, Years } from './filters-types';
 
 export const sortByRating = (rating: string, list: Film[]) => {
   if (rating === RATING.popularDesc) {
@@ -110,5 +72,28 @@ export const sortByPopularity = (popularity: string, list: Film[]) => {
       (item) => item.popularity < 100 || item.vote_count < 200
     );
   }
+  return list;
+};
+
+export const applyAllFilters = (currentStore: FiltersState) => {
+  let films = filmList;
+
+  films = sortByFavorites(currentStore.favorites, filmList);
+  films = sortByRating(currentStore.sortBy, films);
+  films = sortByYear(currentStore.year, films);
+  films = sortByGenres(currentStore.genres, films);
+
+  return films;
+};
+
+export const applySearch = (currentStore: SearchParamsState) => {
+  let list = filmList;
+  const genre = genresList.find((item) => item.name === currentStore.genreName);
+  if (genre) {
+    list = sortByGenres([genre.id], list);
+  }
+  list = sortByVote(currentStore.filmMark, list);
+  list = sortByPopularity(currentStore.popularity, list);
+
   return list;
 };
