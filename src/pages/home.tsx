@@ -2,12 +2,12 @@ import { Filters } from '../components/filters/filters';
 import { Films } from '../components/films/films';
 import { usePagination } from '../hooks/use-pagination';
 import { useSelector } from 'react-redux';
-import { ReduxState } from '../store/reducers/state-types';
+import { StoreState } from '../store/state-types';
 
 const filmsPerPage = 10;
 
 const Home = () => {
-  const currentStore = useSelector((state: ReduxState) => state.applyFilters);
+  const currentStore = useSelector((state: StoreState) => state.applyFilters);
   const currentList = currentStore.initList;
 
   const { pages, currentPage, setCurrentPage, currentFilms } = usePagination(

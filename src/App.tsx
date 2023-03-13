@@ -4,17 +4,16 @@ import { Outlet } from 'react-router-dom';
 import { Header } from './components/header/header';
 import { Modal } from './components/modal/modal';
 import { changeFilterType, showModal } from './store/actions';
-import { ReduxState } from './store/reducers/root-reducer';
 import { initialFilters } from './shared/const';
 import { SortPayload, InitialFilters } from './shared/types';
-import './App.scss';
 import { initialFavorites } from './store/reducers/apply-filters/const';
+import { StoreState } from './store/state-types';
+import './App.scss';
 
 function App() {
   const dispatch = useDispatch();
-  const userStatus = useSelector((state: ReduxState) => state.authorize);
-
-  const isModal = useSelector((state: ReduxState) => state.showModal);
+  const userStatus = useSelector((state: StoreState) => state.authorize);
+  const isModal = useSelector((state: StoreState) => state.showModal);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

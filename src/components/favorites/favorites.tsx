@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { ReduxState } from '../../store/reducers/root-reducer';
 import { getLocalItem } from '../../shared/get-local';
 import { Film } from '../../shared/types';
 import { showModal } from '../../store/actions';
 import filmsList from '../../assets/films.json';
+import { StoreState } from '../../store/state-types';
 import styles from './favorites.module.scss';
 
 interface FavoritesProps {
@@ -15,7 +15,7 @@ interface FavoritesProps {
 
 const Favorites = ({ image, storageKey, id }: FavoritesProps) => {
   const dispatch = useDispatch();
-  const userStatus = useSelector((state: ReduxState) => state.authorize);
+  const userStatus = useSelector((state: StoreState) => state.authorize);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {

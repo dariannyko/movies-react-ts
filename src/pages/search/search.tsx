@@ -5,7 +5,6 @@ import { Sort } from '../../components/sort/sort';
 import { FilmCard } from '../../components/films/film-card';
 import { Film } from '../../shared/types';
 import genresList from '../../assets/genres.json';
-import styles from './search.module.scss';
 import {
   APPLY_GENRE_NAME,
   APPLY_MARK,
@@ -14,8 +13,9 @@ import {
 } from '../../store/actions';
 import { OutletContextType } from '../../router/outlet-context-type';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxState } from '../../store/reducers/state-types';
 import { POPULARITY, VOTE } from '../../shared/filters/filters-const';
+import { StoreState } from '../../store/state-types';
+import styles from './search.module.scss';
 
 const currentGenresList = genresList.map((item) => item.name);
 const filmMarkList = Object.values(VOTE);
@@ -27,7 +27,7 @@ const Search = () => {
   const [isWarning, setIsWarning] = useState(false);
   const dispatch = useDispatch();
   const currentStore = useSelector(
-    (state: ReduxState) => state.applySearchParams
+    (state: StoreState) => state.applySearchParams
   );
   const { pages, currentPage, setCurrentPage, currentFilms } = usePagination(
     filmsPerPage,
