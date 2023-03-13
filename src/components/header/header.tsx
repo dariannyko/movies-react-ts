@@ -1,11 +1,11 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReduxState } from '../../store/reducers/root-reducer';
 import { Button } from '../button/button';
 import { userKey } from '../../shared/const';
 import logo from '../../assets/img/logo.svg';
-import styles from './header.module.scss';
+import { StoreState } from '../../store/state-types';
 import { authorizeUser, showModal } from '../../store/actions';
+import styles from './header.module.scss';
 
 const returnBack = -1;
 
@@ -13,7 +13,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const userStatus = useSelector((state: ReduxState) => state.authorize);
+  const userStatus = useSelector((state: StoreState) => state.authorize);
 
   const logIn = () => {
     if (!userStatus) {

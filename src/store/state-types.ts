@@ -1,4 +1,4 @@
-import { Film } from "../../shared/types";
+import { Film } from '../shared/types';
 
 export interface FiltersState {
   initList: Film[];
@@ -15,7 +15,7 @@ export interface SearchParamsState {
   genreName: string;
 }
 
-export interface ReduxState {
+export interface StoreState {
   applyFilters: FiltersState;
   applySearchParams: SearchParamsState;
   authorize: boolean;

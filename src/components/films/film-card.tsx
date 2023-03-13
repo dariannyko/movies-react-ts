@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Favorites } from '../favorites/favorites';
 import styles from './film-card.module.scss';
+
 const imageUrl = 'https://image.tmdb.org/t/p/w500';
 
 interface FilmCardProps {

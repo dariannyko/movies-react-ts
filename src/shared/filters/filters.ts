@@ -2,7 +2,7 @@ import { Film } from '../types';
 import { getLocalItem } from '../get-local';
 import filmList from '../../assets/films.json';
 import genresList from '../../assets/genres.json';
-import { FiltersState, SearchParamsState } from '../../store/reducers/state-types';
+import { FiltersState, SearchParamsState } from '../../store/state-types';
 import { FAVORITES, POPULARITY, RATING, VOTE, YEARS } from './filters-const';
 import { Favorites, Years } from './filters-types';
 

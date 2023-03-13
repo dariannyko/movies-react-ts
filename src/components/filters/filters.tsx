@@ -1,6 +1,5 @@
 import { useOutletContext, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import {
   APPLY_RATING,
   APPLY_YEAR,
@@ -12,10 +11,10 @@ import { CheckboxFrom } from '../checkbox-form/checkbox-form';
 import { Pagination } from '../pagination/pagination';
 import { Sort } from '../sort/sort';
 import { OutletContextType } from '../../router/outlet-context-type';
+import { StoreState } from '../../store/state-types';
 import genresList from '../../assets/genres.json';
 import emoji from '../../assets/img/magnifier-icon.svg';
 import styles from './filters.module.scss';
-import { ReduxState } from '../../store/reducers/state-types';
 
 const sortList = [
   'Популярные по убыванию',
@@ -35,7 +34,7 @@ interface FiltersProps {
 const Filters = ({ pages, currentPage, setCurrentPage }: FiltersProps) => {
   const { changeFavoritesType, resetFilters, changeSortType } =
     useOutletContext<OutletContextType>();
-  const currentStore = useSelector((state: ReduxState) => state.applyFilters);
+  const currentStore = useSelector((state: StoreState) => state.applyFilters);
 
   return (
     <aside className={styles.container}>
