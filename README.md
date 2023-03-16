@@ -1,71 +1,33 @@
-# **Начало работы**
+# Movies
 
-- `npm create vite@latest my-react-app --template react`
-- `cd my-react-app`
-- `npm install`
-- `npm run dev`
+Movies app
 
----
+### Used technologies
+- JavaScript 
+- TypeScript 
+- React 
 
-# Установка Eslint
+### Used libraries
+react-router redux
 
-- `npm init @eslint/config`
-- `npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-config-airbnb`
+<br>
 
----
+## Available Scripts
+In the project directory, you can run:
 
-## Настройка .eslintrc.json
+### <code>npm install</code> 
+Install npm
+### <code>npm run dev</code> 
+Runs the app in the development mode. \
+Open http://localhost:3000 to view it in the browser. \
+\
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+### <code>npm run build</code>
+Builds the app for production to the build folder. \
+It correctly bundles React in production mode and optimizes the build for the best performance. \
+The build is minified and the filenames include the hashes.\
+\
+Your app is ready to be deployed!
 
-```
-"extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:react/jsx-runtime",
-        "plugin:import/recommended",
-        "airbnb",
-        "prettier"
-    ],
-
-"plugins": [
-        "react-hooks",
-        "react"
-    ],
-
-"rules": {
-        "react/react-in-jsx-scope": "off",
-        "import/prefer-default-export": "off",
-        "react/prop-types": 0,
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn"
-    }
-
-```
-
----
-
-# Установка **Prettier**
-
-- `npm install -D --save-exact prettier eslint-config-prettier`
-- `echo {}> .prettierrc.json`
-
----
-
-### настройка .prettierrc.json
-
-```
-{
-  "trailingComma": "es5",
-  "tabWidth": 4,
-  "semi": true,
-  "singleQuote": true
-}
-```
----
-
-# Установка **Redux**
-
-- `npm install redux react-redux --save`
-- `npm install --save-dev @redux-devtools/core`
 
