@@ -13,12 +13,15 @@
 
 .wrapper {
   padding: 10px 0 25px;
-
   width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  @media (max-width: 1199px) {
+    padding: 10px 0 20px;
+  }
 }
 
 .filmContainer {
@@ -46,6 +49,10 @@
   background-color: #141414;
   font-weight: 800;
   line-height: 1;
+
+  @media (max-width: 1199px) {
+    font-size: 14px;
+  }
 }
 
 .images {
@@ -61,6 +68,11 @@
   font-size: 20px;
   font-weight: 800;
   line-height: 1.1;
+
+  @media (max-width: 1199px) {
+    font-size: 18px;
+    line-height: 1.2;
+  }
 }
 
 .more {

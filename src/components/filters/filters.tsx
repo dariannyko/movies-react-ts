@@ -72,7 +72,7 @@ const Filters = ({ pages, currentPage, setCurrentPage }: FiltersProps) => {
       <Link to={`/search`}>
         <div className={styles.searchFilm}>
           <img src={emoji} alt="Эмоджи" />
-          <p>Не знаю, что посмотреть</p>
+          <p>Что посмотреть?</p>
         </div>
       </Link>
       <Pagination

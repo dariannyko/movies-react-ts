@@ -19,8 +19,13 @@
 
 .search-film {
   display: flex;
-  column-gap: 15px;
+  column-gap: 16px;
   margin: 0 0 45px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
+
+  @media (max-width: 1199px) {
+    font-size: 16px;
+    line-height: 1.3;
+  }
 }

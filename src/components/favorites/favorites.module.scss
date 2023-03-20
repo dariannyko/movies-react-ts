@@ -1,4 +1,4 @@
-.favoritesFilms {
+.favorites-films {
     width: 25px;
     height: auto;
     padding: 0 10px 0 0;
@@ -10,9 +10,13 @@
         fill: #ffcf40;
       }
     }
+
+    @media (max-width: 1199px) {
+      width: 22px;
+    }
   }
   
-  .watchLater {
+  .watch-later {
     width: 20px;
     height: auto;
     flex-shrink: 0;
@@ -22,5 +26,9 @@
         stroke: #6b43d7;
         fill: #6b43d7;
       }
+    }
+
+    @media (max-width: 1199px) {
+      width: 18px;
     }
   }
