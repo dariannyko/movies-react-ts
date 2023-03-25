@@ -15,15 +15,7 @@ import { StoreState } from '../../store/state-types';
 import genresList from '../../assets/genres.json';
 import emoji from '../../assets/img/magnifier-icon.svg';
 import styles from './filters.module.scss';
-
-const sortList = [
-  'Популярные по убыванию',
-  'Популярные по возрастанию',
-  'Рейтинг по убыванию',
-  'Рейтинг по возрастанию',
-];
-const yearList = ['Показать все', '2020', '2019', '2018', '2017'];
-const favoriteList = ['none', 'Избранное', 'Смотреть позже'];
+import { favoriteList, sortList, yearList } from '../../shared/const';
 
 interface FiltersProps {
   pages: number;

@@ -5,6 +5,8 @@ import { ModalAction } from './types';
 export const setModal = (state = initialModal, action: ModalAction) => {
   switch (action.type) {
     case SET_MODAL: {
+      console.log('MODAL');
+      
       return action.payload;
     }
     default: {

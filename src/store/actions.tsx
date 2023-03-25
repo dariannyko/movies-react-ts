@@ -42,3 +42,10 @@ export const changeFilterType = (
     payload: filterType,
   };
 };
+
+export const applyFavorites = (favorites: string) => {
+  return {
+    type: APPLY_FAVORITES,
+    payload: favorites,
+  };
+};

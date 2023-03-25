@@ -19,7 +19,7 @@ export interface StoreState {
   applyFilters: FiltersState;
   applySearchParams: SearchParamsState;
   authorize: boolean;
-  showModal: boolean;
+  setModal: boolean;
 }
 
 ('{ sortBy: string | number[]; initList: ({ adult: boolean; backdrop_path: string; genre_ids: number[]; id: number; original_language: string; original_title: string; overview: string; popularity: number; ... 5 more ...; vote_count: number; } | { ...; })[]; genres: number[]; year: string; favorites: string; }');

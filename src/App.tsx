@@ -13,7 +13,7 @@ import './App.scss';
 function App() {
   const dispatch = useDispatch();
   const userStatus = useSelector((state: StoreState) => state.authorize);
-  const isModal = useSelector((state: StoreState) => state.showModal);
+  const isModal = useSelector((state: StoreState) => state.setModal);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -46,11 +46,12 @@ function App() {
 
     dispatch(changeFilterType(actionType, listType));
   };
+console.log(isModal);
 
   return (
     <div className="App">
       {isModal && <Modal />}
-      <Header />
+      <Header resetFilters={resetFilters} />
 
       <Outlet
         context={{

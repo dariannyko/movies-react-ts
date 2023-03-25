@@ -5,6 +5,7 @@ import genresList from '../../assets/genres.json';
 import { FiltersState, SearchParamsState } from '../../store/state-types';
 import { FAVORITES, POPULARITY, RATING, VOTE, YEARS } from './filters-const';
 import { Favorites, Years } from './filters-types';
+import { initialState } from '../../pages/search/search';
 
 export const sortByRating = (rating: string, list: Film[]) => {
   if (rating === RATING.popularDesc) {
@@ -87,6 +88,9 @@ export const applyAllFilters = (currentStore: FiltersState) => {
 };
 
 export const applySearch = (currentStore: SearchParamsState) => {
+  if (currentStore.genreName === initialState) {
+    return [];
+  }
   let list = filmList;
   const genre = genresList.find((item) => item.name === currentStore.genreName);
   if (genre) {

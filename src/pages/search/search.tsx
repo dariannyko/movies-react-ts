@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
-import { usePagination } from '../../hooks/use-pagination';
+import { startPage, usePagination } from '../../hooks/use-pagination';
 import { Sort } from '../../components/sort/sort';
 import { FilmCard } from '../../components/films/film-card';
 import { Film } from '../../shared/types';
@@ -20,8 +20,9 @@ import styles from './search.module.scss';
 const currentGenresList = genresList.map((item) => item.name);
 const filmMarkList = Object.values(VOTE);
 const popularityList = Object.values(POPULARITY);
-const initialState = 'Выбрать';
+export const initialState = 'Выбрать';
 const filmsPerPage = 1;
+const searchActions = [APPLY_GENRE_NAME, APPLY_MARK, APPLY_POPULARITY];
 
 const Search = () => {
   const [isWarning, setIsWarning] = useState(false);
@@ -35,7 +36,6 @@ const Search = () => {
   );
   const filmId = currentStore.currentFilmsList[currentPage - 1]?.id;
   const { changeSortType } = useOutletContext<OutletContextType>();
-  console.log(currentStore);
 
   const applyFilters = () => {
     if (
@@ -58,7 +58,15 @@ const Search = () => {
 
   const filmTurns = () => {
     setCurrentPage(currentPage + 1);
-    if (currentPage <= pages) {
+
+    if (currentPage >= pages) {
+      setCurrentPage(startPage);
+      searchActions.forEach((item) =>
+        dispatch({
+          type: item,
+          payload: initialState,
+        })
+      );
       dispatch(
         setSearchParams({
           filmMark: initialState,

@@ -5,12 +5,20 @@
   flex-direction: column;
   background-color: #1a1a1a;
   color: #898989;
+
+@media (max-width: 899px) {
+  width: 25%;
+}
 }
 
 .title {
   margin: 0 0 20px;
   font-size: 22px;
   font-weight: 800;
+
+  @media (max-width: 899px) {
+    font-size: 20px;
+  }
 }
 
 .filters-button {

@@ -11,4 +11,9 @@
   &:hover {
     background-color: #7348ec;
   }
+
+  @media (max-width: 899px) {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
 }

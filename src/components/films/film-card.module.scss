@@ -3,6 +3,10 @@
   min-height: 320px;
   color: #fff;
   background-color: #666;
+
+  @media (max-width: 1199px) {
+    min-height: 295px;
+  }
 }
 
 .filmCover {

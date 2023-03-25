@@ -101,8 +101,6 @@ legend {
   display: block;
 }
 
-
-
 body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -117,6 +115,10 @@ body {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+
+  @media (max-width: 899px) {
+    font-size: 12px;
+  }
 }
 
 .container {
