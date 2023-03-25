@@ -1,8 +1,19 @@
 # Movies
 
-Movies app
+Three-pages movies app.
+- Main page is divided into few parts:
+  - Filters: you can sort films by rating, genres, year or reset all filters;
+  - "Favorites" and "watch later" - if you are not logged in, the app will suggest you do this to view your saved movies, as well as sort them by other parameters;
+  - Pagination - shows 10 movies per page, allows you to switch between pages;
+  - Movie list - each movie can be added to your "favorites" or "watch later" if you are logged in. You can also go to the movie page by clicking "more";
+- Film page: shows information about current movie;
+- "What to watch?" - offers you one movie according to your chosen parameters (genre, film evaluation, popularity). If the movie fits - you go to the movie page, if not - you are offered another film until the list is over;
+- Header - contains an authorization button. Depending on the location, shows the "back" button;
+- After the page has been updated and the browser has left, authorization is saved.
 
-### Used technologies
+<br>
+
+## Used technologies
 - JavaScript 
 - TypeScript 
 - React 
