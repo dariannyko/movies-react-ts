@@ -46,4 +46,8 @@ Your app is ready to be deployed!
 ## Project Link :
 ✨ **[Movies](https://effortless-mochi-1aa92a.netlify.app/)** \
 \
+**Login:** dariannyko \
+**Password:** 1234
+ \
+ \
 P.S. If you are in Russia to view pictures, please enable vpn :)
